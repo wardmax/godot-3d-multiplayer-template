@@ -2,8 +2,7 @@ class_name MultiplayerManager
 extends Node
 
 # The bulk of this script is for the authority (host/server).
-
-@export var _player_spawn_point: Node3D
+@export var _player_spawn_point: Node2D
 
 var _multiplayer_scene = preload("res://scenes/player/player.tscn")
 var _players_in_game: Dictionary = {}
@@ -53,9 +52,9 @@ func _remove_player_from_game(network_id: int):
 				_players_in_game.erase(network_id)
 
 # Setup initial or reload saved player properties
-func _ready_player(player: Player):
+func _ready_player(player: CharacterBody2D):
 	if is_multiplayer_authority():
-		player.position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2))
+		player.position = Vector2(randi_range(-2, 2), randi_range(-2, 2))
 
 func _peer_connected(network_id: int):
 	print("Peer connected: %s" % network_id)

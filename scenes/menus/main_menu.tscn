@@ -1,8 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ffncciksi1tw"]
+[gd_scene load_steps=6 format=3 uid="uid://ffncciksi1tw"]
 
 [ext_resource type="Script" uid="uid://bdt8oshccf8uk" path="res://scripts/menus/main_menu.gd" id="1_1dabp"]
 [ext_resource type="Theme" uid="uid://giidcej8oij7" path="res://asssets/ui/menu_theme.tres" id="2_b784e"]
-[ext_resource type="Texture2D" uid="uid://yli35jpr7rkb" path="res://asssets/ui/menu-bg.jpg" id="2_yqvau"]
+
+[sub_resource type="Gradient" id="Gradient_ovrgc"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2o76q"]
+gradient = SubResource("Gradient_ovrgc")
+fill_to = Vector2(1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_413xs"]
 
@@ -35,7 +40,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_yqvau")
+texture = SubResource("GradientTexture2D_2o76q")
 expand_mode = 2
 
 [node name="Menu" type="Panel" parent="."]

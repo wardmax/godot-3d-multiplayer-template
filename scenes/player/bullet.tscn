@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cap0dfqypbkcm"]
+
+[ext_resource type="Script" uid="uid://df4ysvvnpmeql" path="res://scenes/player/bullet.gd" id="1_j5eos"]
+[ext_resource type="Texture2D" uid="uid://c2ojrj1et658j" path="res://asssets/characters/littleguy.png" id="2_j5eos"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j5eos"]
+radius = 11.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_j5eos"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="bullet" type="Area2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_j5eos")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.9073486e-06, 1.9073486e-06)
+scale = Vector2(0.31975, 0.31975)
+texture = ExtResource("2_j5eos")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_j5eos")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_j5eos")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
