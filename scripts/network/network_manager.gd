@@ -20,7 +20,7 @@ var _available_networks: Dictionary = {
 var selected_network: AvailableNetworks = AvailableNetworks.ENET
 var selected_network_configuration: Dictionary = _available_networks[0]
 
-var _loading_scene = preload("res://scenes/loading.tscn")
+var _loading_scene = preload("res://scenes/menus/loading.tscn")
 var _active_loading_scene
 var active_network_node
 var is_hosting_game = false
@@ -30,7 +30,8 @@ var active_game_id = ""
 func host_game(network_connection_configs: NetworkConnectionConfigs):
 	print("Host game")
 	if not OS.has_feature(DEDICATED_SERVER_FEATURE_NAME):
-		show_loading()
+		pass
+		#show_loading()
 	
 	# print("Selected network scene: %s" % selected_network_configuration.scene)
 	
@@ -63,6 +64,7 @@ func join_game(network_connection_configs: NetworkConnectionConfigs):
 	
 	# Connect client-side lifecycle signals
 	active_network_node.network_server_disconnected.connect(disconnect_from_game)
+	active_network_node.network_client_connected.connect(hide_loading)
 	
 	active_network_node.create_client_peer(network_connection_configs)
 	

@@ -1,0 +1,95 @@
+[gd_scene load_steps=18 format=3 uid="uid://baq8wujtrjp3a"]
+
+[ext_resource type="Texture2D" uid="uid://bww4n8c7pehng" path="res://asssets/Skyboxes/Epic_BlueSunset_EquiRect_flat.png" id="1_1fp7r"]
+[ext_resource type="VoxelGeneratorGraph" uid="uid://n8ga6ousqxup" path="res://scenes/world/islands_v1.tres" id="1_dphjl"]
+[ext_resource type="Script" uid="uid://f31x03o7wc2k" path="res://scenes/world/water.gd" id="2_water"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6m72w"]
+panorama = ExtResource("1_1fp7r")
+
+[sub_resource type="Sky" id="Sky_sky"]
+sky_material = SubResource("PanoramaSkyMaterial_6m72w")
+
+[sub_resource type="Environment" id="Environment_env"]
+background_mode = 2
+sky = SubResource("Sky_sky")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f3sb7"]
+frequency = 0.0285
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fj7yv"]
+noise = SubResource("FastNoiseLite_f3sb7")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tlwt5"]
+noise = SubResource("FastNoiseLite_f3sb7")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqk2v"]
+transparency = 1
+albedo_color = Color(0.854193, 0.4497695, 0.2588323, 0.27450982)
+emission_enabled = true
+emission = Color(0.07541265, 0.43257064, 0.5697728, 1)
+emission_energy_multiplier = 2.52
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_fj7yv")
+refraction_enabled = true
+refraction_scale = 1.0
+refraction_texture = SubResource("NoiseTexture2D_tlwt5")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_036b0"]
+top_radius = 200.0
+bottom_radius = 200.0
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dphjl"]
+height = 1.0
+radius = 200.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dphjl"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="VoxelBlockyModelEmpty" id="VoxelBlockyModelEmpty_6m72w"]
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_v5dby"]
+color = Color(0.55405915, 0.3883254, 0.096439295, 1)
+
+[sub_resource type="VoxelBlockyLibrary" id="VoxelBlockyLibrary_t5ptc"]
+models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModelEmpty_6m72w"), SubResource("VoxelBlockyModelCube_v5dby")])
+
+[sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_bq33v"]
+library = SubResource("VoxelBlockyLibrary_t5ptc")
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660253, -0.4330129, 0.2500001, 0, 0.49999994, 0.86602545, -0.50000024, 0.74999994, -0.43301257, 21.535686, 68.65019, 0)
+shadow_enabled = true
+
+[node name="water" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1945572, 0)
+script = ExtResource("2_water")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67, 0, 1.308)
+material_override = SubResource("StandardMaterial3D_aqk2v")
+mesh = SubResource("CylinderMesh_036b0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="water"]
+shape = SubResource("CylinderShape3D_dphjl")
+debug_color = Color(0.9990538, 0, 0.13788271, 0.41960785)
+
+[node name="VoxelTerrain" type="VoxelTerrain" parent="."]
+bounds = AABB(-1008, -512, -1008, 2016, 1024, 2016)
+max_view_distance = 400
+material_override = SubResource("StandardMaterial3D_dphjl")
+generator = ExtResource("1_dphjl")
+mesher = SubResource("VoxelMesherBlocky_bq33v")
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)

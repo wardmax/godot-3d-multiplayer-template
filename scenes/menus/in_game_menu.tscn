@@ -1,9 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://cys03q34jt762"]
 
-[ext_resource type="Script" path="res://scripts/menus/in_game_menu.gd" id="1_4hjsv"]
+[ext_resource type="Script" uid="uid://bjrtcm22iojme" path="res://scripts/menus/in_game_menu.gd" id="1_4hjsv"]
 [ext_resource type="Theme" uid="uid://giidcej8oij7" path="res://asssets/ui/menu_theme.tres" id="2_sdrml"]
 
 [sub_resource type="FontFile" id="FontFile_vdfs6"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -12,9 +15,11 @@ cache/0/16/0/scale = 1.0
 
 [node name="InGameMenu" type="Control" node_paths=PackedStringArray("active_host_label", "game_id_label")]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_sdrml")
@@ -30,9 +35,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -44.0
+offset_top = -68.0
 offset_right = 100.0
-offset_bottom = 44.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 0
@@ -58,22 +63,20 @@ text = "Quit"
 
 [node name="ConnectionInfoPanel" type="Panel" parent="."]
 layout_mode = 1
-offset_right = 370.0
-offset_bottom = 75.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_top = -250.0
+offset_right = -130.0
+offset_bottom = -175.0
+grow_horizontal = 0
 
 [node name="GridContainer" type="GridContainer" parent="ConnectionInfoPanel"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -29.5
-offset_right = 180.0
-offset_bottom = 32.5
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 1.0
+offset_right = 360.0
+offset_bottom = 62.0
 theme_override_constants/v_separation = 8
 
 [node name="IpPanel" type="HBoxContainer" parent="ConnectionInfoPanel/GridContainer"]

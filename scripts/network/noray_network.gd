@@ -1,5 +1,6 @@
 extends Node
 
+signal network_client_connected
 signal network_server_disconnected
 
 var _port = 8890
@@ -134,7 +135,13 @@ func setup_client_noray_connection_signals():
 
 # Client signals 
 func setup_client_enet_connection_signals():
+	multiplayer.connected_to_server.connect(_noray_client_connected)
 	multiplayer.server_disconnected.connect(_noray_server_disconnected)
+
+func _noray_client_connected():
+	print("Noray client connected to server/host, on peer %s with auth: %s" % [multiplayer.get_unique_id(), get_multiplayer_authority()])
+	if not is_multiplayer_authority():
+		network_client_connected.emit()
 
 func _noray_server_disconnected():
 	print("Noray server disconnected")

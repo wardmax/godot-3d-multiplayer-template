@@ -20,6 +20,10 @@ func hide():
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("in-game-menu"):
+		var mm = get_tree().root.find_child("MultiplayerManager", true, false)
+		if mm and not mm.is_match_started:
+			return # Cannot pause during lobby
+			
 		if (self.visible):
 			hide()
 		else:
